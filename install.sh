@@ -1,14 +1,19 @@
 #!/bin/bash
+set -e
 
 # Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
 
 # Powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+  ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+fi
 
-# Symlinks
-ln -sf $PWD/zsh/.zshrc ~/.zshrc
-ln -sf $PWD/zsh/.p10k.zsh ~/.p10k.zsh
-mkdir -p ~/.config/kitty
-ln -sf $PWD/kitty/kitty.conf ~/.config/kitty/kitty.conf
+# Stow aplica configs
+cd "$HOME/dotfiles"
+stow zsh
+stow p10k
+stow kitty
