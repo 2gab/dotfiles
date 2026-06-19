@@ -134,7 +134,7 @@ _backup_if_exists() {
   fi
 }
 
-for pkg in zsh p10k git .config .assets .emacs.d; do
+for pkg in zsh p10k git config assets emacs; do
   if [ -d "$DOTFILES/$pkg" ]; then
     if stow -R "$pkg" >> "$LOG" 2>&1; then
       log "Stowed: $pkg"
