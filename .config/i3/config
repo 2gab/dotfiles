@@ -203,7 +203,7 @@ bar {
 }
 
 # exec feh to set wallpaper
-exec --no-startup-id feh --bg-scale ~/.assets/wallpaper/frost-forest1.webp
+exec --no-startup-id feh --bg-scale ~/.assets/wallpapers/steven-wood-_C9K8A_-vuw-unsplash.jpg
 
 # exec picom to set transparency
 exec --no-startup-id picom --config ~/.config/picom/picom.conf 
