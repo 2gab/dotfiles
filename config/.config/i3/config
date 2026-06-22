@@ -228,3 +228,6 @@ exec --no-startup-id xrandr --output HDMI-2 --auto --right-of eDP-1
 
 # Screenshot
 bindsym $mod+Shift+s exec "maim -s | xclip -selection clipboard -t image/png"
+
+# Lock screen
+bindsym $mod+ctrl+l exec --no-startup-id i3lock
