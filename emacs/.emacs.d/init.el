@@ -4,8 +4,8 @@
 
 ;;; Loads 
 ;; theme
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/2gab-themes/")
-(load-theme '2gab-discovery t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/2gab-themes/")
+(load-theme '2gab-veridis-quo t)
 
 ;; splash 
 (add-to-list 'load-path "~/.emacs.d/esplash/")
