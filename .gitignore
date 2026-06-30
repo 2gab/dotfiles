@@ -1,1 +1,11 @@
 install.log
+remove.log
+
+# Emacs auto-generated directories
+emacs/.emacs.d/elpa/
+emacs/.emacs.d/eln-cache/
+emacs/.emacs.d/straight/
+emacs/.emacs.d/transient/
+emacs/.emacs.d/auto-save-list/
+emacs/.emacs.d/recentf
+emacs/.emacs.d/.mc-lists.el
