@@ -2,15 +2,20 @@
 
 ;;; code:
 
-;;; Loads 
+;;; Loads
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/2gab-themes/")
 (load-theme '2gab-veridis-quo t)
 
-;; splash 
+;; nas-keys
+;(add-to-list 'load-path "~/.emacs.d/nas")
+;(require 'nas)
+;(nas-mode 1)
+;(add-hook 'after-init-hook #'nas-mode)
+
+;; esplash
 (add-to-list 'load-path "~/.emacs.d/esplash/")
-(require 'esplash) 
-(add-hook 'emacs-startup-hook 'esplash)
+(require 'esplash)
 
 ;; packages
 (setq package-archives
