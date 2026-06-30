@@ -206,7 +206,7 @@ bar {
 
 # exec feh to set wallpaper
 exec --no-startup-id feh --bg-scale ~/.assets/wallpapers/snowy-dark-extended-v1.png
-.
+
 # exec picom to set transparency
 exec --no-startup-id picom --config ~/.config/picom/picom.conf 
 
