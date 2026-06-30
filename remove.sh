@@ -61,7 +61,7 @@ cd "$DOTFILES"
 
 for pkg in zsh p10k git config assets emacs; do
   if [ -d "$DOTFILES/$pkg" ]; then
-    if stow -D "$pkg" >> "$LOG" 2>&1; then
+    if stow -t "$HOME" -D "$pkg" >> "$LOG" 2>&1; then
       log "Unstowed: $pkg"
     else
       warn "Falha ao unstow $pkg (pode já ter sido removido)"

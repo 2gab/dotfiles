@@ -181,11 +181,11 @@ _backup_if_exists() {
 
 for pkg in zsh p10k git config assets emacs; do
   if [ -d "$DOTFILES/$pkg" ]; then
-    if stow -R "$pkg" >> "$LOG" 2>&1; then
+    if stow -t "$HOME" -R "$pkg" >> "$LOG" 2>&1; then
       log "Stowed: $pkg"
     else
       warn "Conflict stowing $pkg — trying with --adopt..."
-      stow --adopt -R "$pkg" >> "$LOG" 2>&1 && log "Stowed (adopted): $pkg" || err "Failed to stow: $pkg"
+      stow -t "$HOME" --adopt -R "$pkg" >> "$LOG" 2>&1 && log "Stowed (adopted): $pkg" || err "Failed to stow: $pkg"
     fi
   else
     warn "Skipped: $pkg (directory not found)"
