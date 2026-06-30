@@ -46,9 +46,9 @@ alias tree="eza --tree --icons"
 alias cat="bat"
 
 # Quick edit dotfiles
-alias zshrc="nvim ~/dotfiles/zsh/.zshrc"
-alias aliases="nvim ~/dotfiles/zsh/aliases.zsh"
-alias exports="nvim ~/dotfiles/zsh/exports.zsh"
+alias zshrc="nvim ~/.dotfiles/zsh/.zshrc"
+alias aliases="nvim ~/.dotfiles/zsh/aliases.zsh"
+alias exports="nvim ~/.dotfiles/zsh/exports.zsh"
 
 # Troubleshooting
 alias code="code --password-store=gnome-libsecret"
