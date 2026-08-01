@@ -202,9 +202,9 @@ if [ ! -f "$HOME/.gitconfig.local" ]; then
   read -r git_name
   git_name="${git_name:-Gabriel Henrique da Silva}"
 
-  printf "  Email [gabriel.silva@mify.com.br]: "
+  printf "  Email [info.2gabrielhdasilva@gmail.com.br]: "
   read -r git_email
-  git_email="${git_email:-gabriel.silva@mify.com.br}"
+  git_email="${git_email:-2gabrielhdasilva@gmail.com.br}"
 
   cat > "$HOME/.gitconfig.local" <<EOF
 [user]
