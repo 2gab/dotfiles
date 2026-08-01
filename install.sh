@@ -219,7 +219,7 @@ fi
 # ─── Default shell ────────────────────────────────────────────────────────────
 section "Default shell"
 
-ZSH_PATH="$(which zsh)"
+ZSH_PATH="$(command -v zsh)"
 if [ "$SHELL" != "$ZSH_PATH" ]; then
   info "Setting zsh as default shell..."
   chsh -s "$ZSH_PATH" >> "$LOG" 2>&1
