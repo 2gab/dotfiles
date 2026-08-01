@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-REPO="https://github.com/gabrhsilva/dotfiles.git"
+REPO="https://github.com/2gab/dotfiles.git"
 DEST="$HOME/.dotfiles"
 
 echo ""
