@@ -1,1 +1,1 @@
-bash <(curl -fsSL https://raw.githubusercontent.com/gabrhsilva/dotfiles/main/bootstrap.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/2gab/dotfiles/main/bootstrap.sh)
