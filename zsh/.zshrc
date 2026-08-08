@@ -3,7 +3,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-DOTFILES="$HOME/.dotfiles"
+DOTFILES="${${(%):-%x}:A:h:h}"
 
 # Load exports (ZSH path, NVM, env vars)
 source "$DOTFILES/zsh/exports.zsh"

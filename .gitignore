@@ -1,6 +1,10 @@
 install.log
 remove.log
 
+# Emacs autosave/lock files
+\#*\#
+.\#*
+
 # Emacs auto-generated directories
 emacs/.emacs.d/elpa/
 emacs/.emacs.d/eln-cache/
