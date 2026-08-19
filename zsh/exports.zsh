@@ -10,3 +10,6 @@ elif [ -s "$NVM_DIR/nvm.sh" ]; then
     # Debian e outros: nvm instalado via curl (~/.nvm)
     source "$NVM_DIR/nvm.sh"
 fi
+
+# direnv (per-project env vars, e.g. LEDGER_FILE in folio)
+eval "$(direnv hook zsh)"
