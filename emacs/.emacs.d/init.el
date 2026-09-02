@@ -61,6 +61,7 @@
 (require '2gab-terminal)
 (require '2gab-ai)
 (require '2gab-org)
+(require '2gab-math)
 
 ;;; Customization
 ;; backups
