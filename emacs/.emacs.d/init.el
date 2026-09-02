@@ -2,6 +2,11 @@
 
 ;;; code:
 
+;; keep native-comp warnings out of a popup buffer -- they're almost always
+;; harmless "might not be defined at compile time" notes from optional
+;; integrations, not real errors.
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;;; Loads
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/2gab-themes/")
