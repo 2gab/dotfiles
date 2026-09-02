@@ -39,9 +39,14 @@
 (use-package org)
 
 ;; pdf-tools: better than doc-view for reading PDFs in Emacs.
+;; :defer t + :init (not :config) is required for pdf-loader-install to
+;; actually defer: pdf-loader-install only postpones pdf-tools-install (and
+;; the epdfinfo autobuild) if pdf-tools itself hasn't been loaded yet, and
+;; :config would force that load immediately on every startup.
 (use-package pdf-tools
-  :config
-  (pdf-tools-install t))
+  :defer t
+  :init
+  (pdf-loader-install t))
 
 ;; modules
 (add-to-list 'load-path "~/.emacs.d/lisp/")
