@@ -27,23 +27,29 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(org ; For outlining. It's bundled with Emacs, but I'm using the latest version. https://orgmode.org/
-                      flx ; For fuzzy-completion in vertico. https://github.com/lewang/flx
-                      rainbow-delimiters ; Highlight parentheses in rainbow colors. https://github.com/Fanael/rainbow-delimiters
-		              magit ; A mode for committing to git repositories and viewing Git history. https://github.com/magit/magit
-		              vertico ; Nicely show menu completions. https://github.com/minad/vertico
-		              autothemer ; Useful for theme development. https://github.com/jasonm23/autothemer
-		              copilot ; An Emacs plugin for GitHub Copilot. https://github.com/copilot-emacs/copilot.el
-		              highlight-indent-guides ; An emacs plugin for guide identation. https://github.com/DarthFennec/highlight-indent-guides
-		              rainbow-mode ; Colorize color names in buffers. https://elpa.gnu.org/packages/rainbow-mode.html
-                      pdf-tools ; For reading pdf in Emacs, better than doc-view. https://elpa.nongnu.org/nongnu/pdf-tools.html
-					  ))
-
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
 (setq package-install-upgrade-built-in t)
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; org is bundled with Emacs, but we want the latest version from GNU ELPA.
+(use-package org)
+
+;; pdf-tools: better than doc-view for reading PDFs in Emacs.
+(use-package pdf-tools
+  :config
+  (pdf-tools-install t))
+
+;; modules
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require '2gab-completion)
+(require '2gab-programming)
+(require '2gab-git)
+(require '2gab-terminal)
+(require '2gab-ai)
 
 ;;; Customization
 ;; backups
@@ -51,23 +57,6 @@
 
 (unless (file-exists-p my-backup-directory)
   (make-directory my-backup-directory t))
-
-;; dired
-
-;; org
-
-;; copilot
-
-;; vertico
-(vertico-mode 1)
-
-;; mode line
-
-;; buffers
-
-;; indent-guides
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(setq highlight-indent-guides-method 'character)
 
 ;; frame
 (setq default-frame-alist
@@ -113,7 +102,7 @@
 (setq initial-scratch-message nil)
 (setq use-dialog-box nil)
 (tab-bar-mode 0)
-(global-tab-line-mode 0) 
+(global-tab-line-mode 0)
 (setq tab-bar-close-button-show nil)
 (setq ring-bell-function 'ignore)
 
@@ -141,4 +130,3 @@
 
 
 ;;; 2gab-init.el ends here
-
