@@ -55,6 +55,7 @@
 (require '2gab-git)
 (require '2gab-terminal)
 (require '2gab-ai)
+(require '2gab-org)
 
 ;;; Customization
 ;; backups
