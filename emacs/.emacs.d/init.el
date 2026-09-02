@@ -80,14 +80,17 @@
 
 ;; fonts
 ;; https://github.com/be5invis/Iosevka/blob/v33.1.0/doc/PACKAGE-LIST.md
-;; iosevka default
-(set-face-attribute 'default nil :font "Iosevka-14")
-(set-face-attribute 'font-lock-keyword-face nil :font "Iosevka Bold")
-(set-face-attribute 'font-lock-variable-name-face nil :font "Iosevka SemiBold")
-(set-face-attribute 'font-lock-string-face nil :font "Iosevka Italic")
-(set-face-attribute 'font-lock-comment-face nil :font "Iosevka Italic")
-(set-face-attribute 'font-lock-constant-face nil :font "Iosevka Bold Italic")
-(set-face-attribute 'font-lock-function-name-face nil :font "Iosevka Bold")
+;; iosevka default -- guarded so a missing font doesn't abort the rest of init.el
+(if (member "Iosevka" (font-family-list))
+    (progn
+      (set-face-attribute 'default nil :font "Iosevka-14")
+      (set-face-attribute 'font-lock-keyword-face nil :font "Iosevka Bold")
+      (set-face-attribute 'font-lock-variable-name-face nil :font "Iosevka SemiBold")
+      (set-face-attribute 'font-lock-string-face nil :font "Iosevka Italic")
+      (set-face-attribute 'font-lock-comment-face nil :font "Iosevka Italic")
+      (set-face-attribute 'font-lock-constant-face nil :font "Iosevka Bold Italic")
+      (set-face-attribute 'font-lock-function-name-face nil :font "Iosevka Bold"))
+  (message "2gab-init: Iosevka font not found, skipping font setup (install ttc-iosevka)"))
 
 ;;; Emacs Variables
 ;; face
