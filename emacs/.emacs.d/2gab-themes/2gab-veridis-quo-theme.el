@@ -29,9 +29,15 @@
 ;; `2gab-veridis-quo' is a warm dark theme for GNU Emacs inspired by
 ;; Daft Punk's "Veridis Quo" — ambient, introspective, and unhurried.
 ;;
-;; Inspired by quiet libraries, mahogany wood, and candlelit pages:
-;; deep brown backgrounds, warm cream foregrounds, and accents of amber,
-;; sage, teal, and violet. Built entirely with Emacs' native
+;; The palette below was extracted directly from the "Veridis Quo"
+;; official video (k-means clustering over ~100 sampled frames):
+;; a near-black concert hall washed in cobalt stage light, robed
+;; figures in violet and warm gold, pages of parchment-cream text,
+;; and one hot orange spotlight cutting through it all.
+;;
+;; Deep near-black violet backgrounds, warm cream foregrounds, and
+;; accents of gold, amber, sage, cobalt blue, violet, and rose — all
+;; sampled from the film itself. Built entirely with Emacs' native
 ;; `deftheme' and `custom-theme-set-faces' facilities.
 
 ;;; Code:
@@ -41,29 +47,29 @@
 
 (let* ((class '((class color) (min-colors 89)))
 
-       ;; ── Backgrounds — mahogany shadows, deepest at center ──────
-       (bg-main    "#1E1511")   ; void behind the shelves
-       (bg-dim     "#2A1D16")   ; elevated surfaces
-       (bg-alt     "#382A22")   ; panels, mode-line
-       (bg-sel     "#4A3420")   ; selection — amber wash
-       (bg-hl      "#261B14")   ; current line — subtle heat
+       ;; ── Backgrounds — the concert hall, deepest at center ───────
+       (bg-main    "#0F0C11")   ; void beyond the stage
+       (bg-dim     "#1C1620")   ; elevated surfaces
+       (bg-alt     "#2C2534")   ; panels, mode-line
+       (bg-sel     "#3D3454")   ; selection — cobalt wash
+       (bg-hl      "#17121B")   ; current line — subtle heat
 
-       ;; ── Foreground — book pages under candlelight ───────────────
-       (fg-main    "#EDD9A8")   ; warm cream — primary text
-       (fg-dim     "#9E8458")   ; muted gold — secondary
-       (fg-faint   "#624F38")   ; distant — line numbers, ghosts
+       ;; ── Foreground — parchment lyrics under stage light ─────────
+       (fg-main    "#D9CBBB")   ; warm cream — primary text
+       (fg-dim     "#A3907C")   ; muted gold — secondary
+       (fg-faint   "#675848")   ; distant — line numbers, ghosts
 
-       ;; ── Accent palette ──────────────────────────────────────────
-       (gold       "#C8922A")   ; amber library glow    → comments
-       (amber      "#E8B448")   ; bright amber flame    → strings
-       (sage       "#7EA87E")   ; book-cover olive      → functions
-       (teal       "#5A9E96")   ; tome-spine teal       → types
-       (orange     "#D46830")   ; vivid surface orange  → constants
-       (violet     "#9B6BC0")   ; purple cloak          → keywords
-       (rose       "#C47878")   ; warm rose             → builtins
-       (sky        "#6E9EBC")   ; character eye blue    → variables
-       (crimson    "#B84040")   ; error / warning
-       (cursor-c   "#E8732A"))  ; cursor — bright flame
+       ;; ── Accent palette — sampled from the film itself ───────────
+       (gold       "#C99A2E")   ; robed-figure gold      → comments
+       (amber      "#E8A93A")   ; bright amber flame      → strings
+       (sage       "#9FBE84")   ; rare glimpse of green   → functions
+       (teal       "#3D6BB0")   ; cobalt stage light      → types
+       (orange     "#E2591A")   ; vivid surface orange    → constants
+       (violet     "#8B7BAE")   ; purple cloak            → keywords
+       (rose       "#C15A78")   ; warm rose                → builtins
+       (sky        "#8CA3C7")   ; hazy cobalt haze        → variables
+       (crimson    "#C4405A")   ; error / warning
+       (cursor-c   "#FF7A2E"))  ; cursor — hot spotlight
 
   (custom-theme-set-faces
    '2gab-veridis-quo
@@ -159,20 +165,20 @@
    `(rainbow-delimiters-mismatched-face((,class (:foreground ,crimson :weight bold))))
 
    ;; ── Diff / VC ───────────────────────────────────────────────────
-   `(diff-added             ((,class (:foreground ,sage :background "#1A2A1A"))))
-   `(diff-removed           ((,class (:foreground ,crimson :background "#2A1A1A"))))
-   `(diff-changed           ((,class (:foreground ,amber :background "#2A2210"))))
+   `(diff-added             ((,class (:foreground ,sage :background "#1E2C17"))))
+   `(diff-removed           ((,class (:foreground ,crimson :background "#2D161B"))))
+   `(diff-changed           ((,class (:foreground ,amber :background "#2E2614"))))
    `(diff-header            ((,class (:foreground ,gold :background ,bg-alt))))
    `(diff-file-header       ((,class (:foreground ,fg-main :background ,bg-alt :weight bold))))
    `(diff-hunk-header       ((,class (:foreground ,violet :background ,bg-dim))))
    `(diff-context           ((,class (:foreground ,fg-dim))))
-   `(diff-refine-added      ((,class (:foreground ,sage :background "#243824" :weight bold))))
-   `(diff-refine-removed    ((,class (:foreground ,crimson :background "#382424" :weight bold))))
+   `(diff-refine-added      ((,class (:foreground ,sage :background "#2B4021" :weight bold))))
+   `(diff-refine-removed    ((,class (:foreground ,crimson :background "#411F28" :weight bold))))
 
-   `(magit-diff-added              ((,class (:foreground ,sage :background "#1A2A1A"))))
-   `(magit-diff-removed            ((,class (:foreground ,crimson :background "#2A1A1A"))))
-   `(magit-diff-added-highlight    ((,class (:foreground ,sage :background "#243824"))))
-   `(magit-diff-removed-highlight  ((,class (:foreground ,crimson :background "#382424"))))
+   `(magit-diff-added              ((,class (:foreground ,sage :background "#1E2C17"))))
+   `(magit-diff-removed            ((,class (:foreground ,crimson :background "#2D161B"))))
+   `(magit-diff-added-highlight    ((,class (:foreground ,sage :background "#2B4021"))))
+   `(magit-diff-removed-highlight  ((,class (:foreground ,crimson :background "#411F28"))))
    `(magit-section-heading         ((,class (:foreground ,amber :weight bold))))
    `(magit-section-highlight       ((,class (:background ,bg-dim))))
    `(magit-branch-local            ((,class (:foreground ,sage :weight bold))))

@@ -15,7 +15,7 @@ set $term kitty
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:JetBrainsMono Nerd Font Mono 9
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -30,7 +30,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --color=0F0C11
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -56,8 +56,8 @@ bindsym $mod+Return exec $term
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+# start dmenu (a program launcher) — themed with the Veridis Quo palette
+bindsym $mod+d exec --no-startup-id dmenu_run -fn 'JetBrainsMono Nerd Font Mono-11' -nb '#0F0C11' -nf '#A3907C' -sb '#C99A2E' -sf '#0F0C11'
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -190,17 +190,19 @@ bindsym $mod+r mode "resize"
 bar {
 	position top
 	status_command i3status
+	font pango:JetBrainsMono Nerd Font Mono 10
+	separator_symbol " · "
 
 	colors {
-		background #282A36
-		statusline #F8F8F2
-		separator  #44475A
+		background #2C2534
+		statusline #D9CBBB
+		separator  #3D3454
 
-		focused_workspace  #44475A #44475A #F8F8F2
-		active_workspace   #282A36 #44475A #F8F8F2
-		inactive_workspace #282A36 #282A36 #BFBFBF
-		urgent_workspace   #FF5555 #FF5555 #F8F8F2
-		binding_mode       #FF5555 #FF5555 #F8F8F2
+		focused_workspace  #E8A93A #E8A93A #0F0C11
+		active_workspace   #2C2534 #3D3454 #D9CBBB
+		inactive_workspace #17121B #17121B #675848
+		urgent_workspace   #C4405A #C4405A #D9CBBB
+		binding_mode       #C4405A #C4405A #D9CBBB
 	}
 }
 
@@ -214,20 +216,25 @@ exec --no-startup-id picom --config ~/.config/picom/picom.conf
 gaps inner 10
 gaps outer 10
 
-# Dracula theme for i3 containers
+# tidy up window edges and center titles — a bit more deliberate than default
+hide_edge_borders smart
+title_align center
+
+# Veridis Quo theme for i3 containers — palette extracted from the
+# Daft Punk video (matches 2gab-veridis-quo-theme.el)
 # class                 border  bground text    indicator child_border
-client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
-client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
-client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.background       #F8F8F2
+client.focused          #8B7BAE #8B7BAE #D9CBBB #E8A93A   #8B7BAE
+client.focused_inactive #3D3454 #3D3454 #D9CBBB #3D3454   #3D3454
+client.unfocused        #0F0C11 #0F0C11 #675848 #0F0C11   #0F0C11
+client.urgent           #3D3454 #C4405A #D9CBBB #C4405A   #C4405A
+client.placeholder      #0F0C11 #0F0C11 #D9CBBB #0F0C11   #0F0C11
+client.background       #D9CBBB
 
 # Display setup
 exec --no-startup-id xrandr --output HDMI-2 --auto --right-of eDP-1
 
 # Lock screen
-bindsym $mod+ctrl+l exec --no-startup-id i3lock
+bindsym $mod+ctrl+l exec --no-startup-id i3lock --color=0F0C11
 
 # Screenshot 
 # Full screen

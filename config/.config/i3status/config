@@ -1,22 +1,22 @@
 load {
-    format = "%1min"
+    format = " %1min"
 }
 general {
     output_format = "i3bar"
     colors = true
-    color_good = "#50FA7B"
-    color_degraded = "#F1FA8C"
-    color_bad = "#FF5555"
-    color_separator = "#586e75"
+    color_good = "#9FBE84"
+    color_degraded = "#E8A93A"
+    color_bad = "#C4405A"
+    color_separator = "#675848"
     interval = "5"
 }
-battery 0 {
-    format = "%status %percentage %remaining"
-    format_down = "No battery"
-    status_chr = "⚡ CHR"
-    status_bat = " BAT"
-    status_unk = "? UNK"
-    status_full = "☻ FULL"
+battery 1 {
+    format = " %status %percentage"
+    format_down = "no battery"
+    status_chr = ""
+    status_bat = ""
+    status_unk = ""
+    status_full = ""
     path = "/sys/class/power_supply/BAT%d/uevent"
     low_threshold = 25
 }
@@ -34,12 +34,12 @@ ethernet eth0 {
 
 run_watch VPN {
     pidfile = "/run/openvpn.pid"
-    format = "%title"
+    format = " VPN"
 }
 
 volume master {
-        format = "♪:%volume"
-        format_muted = "♪: muted (%volume)"
+        format = " %volume"
+        format_muted = " muted"
         device = "default"
         mixer = "Master"
         mixer_idx = 0
@@ -51,7 +51,7 @@ cpu_temperature 0 {
 }
 
 wireless wlp5s0 {
-    format_up = "W: %ip"
+    format_up = " %ip"
     format_down = ""
 }
 
@@ -61,17 +61,17 @@ run_watch DHCP {
 }
 
 time {
-    format = "%d/%m/%y %H:%M"
+    format = " %d/%m/%y %H:%M"
 }
 
 memory {
-  format = "%used"
+  format = " %used"
 }
 
 order += "disk /"
 order += "run_watch VPN"
 order += "wireless wlp5s0"
-order += "battery 0"
+order += "battery 1"
 order += "memory"
 order += "load"
 order += "volume master"
