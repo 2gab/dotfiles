@@ -66,7 +66,11 @@
 (use-package pdf-tools
   :defer t
   :init
-  (pdf-loader-install t))
+  (pdf-loader-install t)
+  ;; global-display-line-numbers-mode breaks horizontal navigation
+  ;; (C-f, C-b, C-x <, C-x >) in pdf-view-mode -- see pdf-tools README,
+  ;; "Known problems".
+  (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 ;; modules
 (add-to-list 'load-path "~/.emacs.d/lisp/")
