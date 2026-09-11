@@ -28,6 +28,15 @@
         (sidesplash-mode 1))
     (message "2gab-init: sidesplash not found at %s, skipping" sidesplash-dir)))
 
+;; scratchgirl
+(let ((scratchgirl-dir (expand-file-name "~/work/me/scratchgirl/")))
+  (if (file-directory-p scratchgirl-dir)
+      (progn
+        (add-to-list 'load-path scratchgirl-dir)
+        (require 'scratchgirl)
+        (scratchgirl-mode 1))
+    (message "2gab-init: scratchgirl not found at %s, skipping" scratchgirl-dir)))
+
 ;; packages
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
@@ -120,7 +129,6 @@
 (setq cursor-type 'box)
 (global-display-line-numbers-mode t)
 (global-hl-line-mode 1)
-(setq initial-scratch-message nil)
 (setq use-dialog-box nil)
 (tab-bar-mode 0)
 (global-tab-line-mode 0)
