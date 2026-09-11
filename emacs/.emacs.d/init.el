@@ -72,6 +72,14 @@
   ;; "Known problems".
   (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 
+;; markdown-mode: README/docs/specs, GFM for GitHub-flavored files.
+;; Live preview needs an external converter -- pandoc-cli (Arch) / pandoc
+;; (Debian), see install.sh.
+(use-package markdown-mode
+  :mode ("\\.md\\'" . gfm-mode)
+  :init
+  (setq markdown-command "pandoc"))
+
 ;; modules
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (require '2gab-completion)

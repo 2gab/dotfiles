@@ -49,10 +49,10 @@ pkg_install() {
 get_packages() {
   case "$DISTRO" in
     arch)
-      echo "zsh stow kitty i3-wm i3status picom feh neovim emacs poppler-glib ttf-jetbrains-mono-nerd eza bat ripgrep fd docker docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-applet dmenu"
+      echo "zsh stow kitty i3-wm i3status picom feh neovim emacs poppler-glib pandoc-cli ttf-jetbrains-mono-nerd eza bat ripgrep fd docker docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-applet dmenu"
       ;;
     debian)
-      echo "zsh stow kitty i3 i3status picom feh neovim emacs libpoppler-glib-dev libpoppler-private-dev fonts-jetbrains-mono eza bat ripgrep fd-find docker.io docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-gnome suckless-tools"
+      echo "zsh stow kitty i3 i3status picom feh neovim emacs libpoppler-glib-dev libpoppler-private-dev pandoc fonts-jetbrains-mono eza bat ripgrep fd-find docker.io docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-gnome suckless-tools"
       ;;
   esac
 }
