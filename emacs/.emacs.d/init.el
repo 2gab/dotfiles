@@ -18,9 +18,16 @@
 ;(nas-mode 1)
 ;(add-hook 'after-init-hook #'nas-mode)
 
-;; esplash
-(add-to-list 'load-path "~/.emacs.d/esplash/")
-(require 'esplash)
+;; sidesplash (successor to esplash)
+;; guarded so a missing checkout doesn't abort the rest of init.el --
+;; esplash's old, unguarded require was doing exactly that.
+(let ((sidesplash-dir (expand-file-name "~/work/me/sidesplash/")))
+  (if (file-directory-p sidesplash-dir)
+      (progn
+        (add-to-list 'load-path sidesplash-dir)
+        (require 'sidesplash)
+        (sidesplash-mode 1))
+    (message "2gab-init: sidesplash not found at %s, skipping" sidesplash-dir)))
 
 ;; packages
 (setq package-archives
