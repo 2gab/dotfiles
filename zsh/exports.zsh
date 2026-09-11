@@ -1,6 +1,9 @@
 # Path to Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
+# user-local binaries (e.g. rtk)
+export PATH="$HOME/.local/bin:$PATH"
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 if [ -s "/usr/share/nvm/init-nvm.sh" ]; then
