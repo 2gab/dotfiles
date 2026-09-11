@@ -24,6 +24,7 @@
       (progn
         (add-to-list 'load-path sidesplash-dir)
         (require 'sidesplash)
+        (setq sidesplash-side 'left)
         (sidesplash-mode 1))
     (message "2gab-init: sidesplash not found at %s, skipping" sidesplash-dir)))
 
