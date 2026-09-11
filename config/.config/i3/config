@@ -220,8 +220,8 @@ gaps outer 10
 hide_edge_borders smart
 title_align center
 
-# Veridis Quo theme for i3 containers — palette extracted from the
-# Daft Punk video (matches 2gab-veridis-quo-theme.el)
+# Veridis Quo theme for i3 containers
+# matches 2gab-veridis-quo-theme.el
 # class                 border  bground text    indicator child_border
 client.focused          #8B7BAE #8B7BAE #D9CBBB #E8A93A   #8B7BAE
 client.focused_inactive #3D3454 #3D3454 #D9CBBB #3D3454   #3D3454
