@@ -37,6 +37,18 @@
         (scratchgirl-mode 1))
     (message "2gab-init: scratchgirl not found at %s, skipping" scratchgirl-dir)))
 
+;; readlog
+;; safe to enable before pdf-tools loads below: it only calls into
+;; pdf-view at runtime, from pdf-view-mode-hook, by which point a .pdf
+;; file has already triggered pdf-tools' own autoloads.
+(let ((readlog-dir (expand-file-name "~/work/me/readlog/")))
+  (if (file-directory-p readlog-dir)
+      (progn
+        (add-to-list 'load-path readlog-dir)
+        (require 'readlog)
+        (readlog-pdf-tools-mode 1))
+    (message "2gab-init: readlog not found at %s, skipping" readlog-dir)))
+
 ;; packages
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
