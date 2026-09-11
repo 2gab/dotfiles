@@ -18,9 +18,7 @@
 ;(nas-mode 1)
 ;(add-hook 'after-init-hook #'nas-mode)
 
-;; sidesplash (successor to esplash)
-;; guarded so a missing checkout doesn't abort the rest of init.el --
-;; esplash's old, unguarded require was doing exactly that.
+;; sidesplash
 (let ((sidesplash-dir (expand-file-name "~/work/me/sidesplash/")))
   (if (file-directory-p sidesplash-dir)
       (progn
