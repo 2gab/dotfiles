@@ -16,3 +16,6 @@ fi
 
 # direnv (per-project env vars, e.g. LEDGER_FILE in folio)
 eval "$(direnv hook zsh)"
+
+# Anki: evita crash (SIGSEGV) na composicao por GPU do Qt WebEngine com o driver Mesa/Intel
+export QTWEBENGINE_CHROMIUM_FLAGS="--disable-gpu"
