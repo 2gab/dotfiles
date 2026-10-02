@@ -92,6 +92,14 @@
   :init
   (setq markdown-command "pandoc"))
 
+;; xclip: hooks kill-ring (C-w, M-w, C-k...) into the X11 clipboard via
+;; interprogram-cut-function/-paste-function, so Emacs -nw shares the
+;; clipboard with Firefox et al. GUI Emacs already does this natively.
+(use-package xclip
+  :unless (display-graphic-p)
+  :config
+  (xclip-mode 1))
+
 ;; modules
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (require '2gab-completion)
