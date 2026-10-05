@@ -8,6 +8,17 @@
 
 ;;; Code:
 
+;; treesit-auto: maps .ts/.tsx/.js (and others) to the built-in *-ts-mode
+;; variants, auto-installing the tree-sitter grammar on first use. Without
+;; this, those extensions fall back to fundamental-mode -- no major mode,
+;; no font-lock, no highlighting regardless of theme.
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install t)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
 ;; eglot ships with Emacs 29+. Wired only into the modes with a language
 ;; server actually configured on this machine, not all of prog-mode, so it
 ;; never tries to start a server where none exists.
