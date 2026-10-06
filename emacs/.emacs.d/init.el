@@ -7,6 +7,11 @@
 ;; integrations, not real errors.
 (setq native-comp-async-report-warnings-errors 'silent)
 
+;; route Custom's auto-saved state (package-selected-packages, etc.) to its
+;; own untracked file instead of letting it append to this one.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file t)
+
 ;;; Loads
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/2gab-themes/")
