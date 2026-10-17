@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: component (destructured props)
+# key: component
+# --
+interface ${1:Component}Props {
+  $2
+}
+
+export const ${1:Component} = ({
+  $3
+}: ${1:Component}Props) => {
+  return (
+    $0
+  )
+}

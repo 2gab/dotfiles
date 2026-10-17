@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: mutation
+# key: mutation
+# --
+const ${1:mutationName} = useCreateMutation({
+  key: ['${2:key}'],
+  mutationFn: ${3:mutationFn},
+  messages: {
+    onMutate: '${4:onMutate}',
+    onSuccess: '${5:onSuccess}',
+    onError: 'error',
+  },
+})$0

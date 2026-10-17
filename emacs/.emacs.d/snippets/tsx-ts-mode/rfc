@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: rfc (React function component)
+# key: rfc
+# --
+import React from 'react'
+
+interface ${1:Component}Props {
+  $2
+}
+
+export const ${1:Component} = (props: ${1:Component}Props) => {
+  return (
+    <div>
+      $0
+    </div>
+  )
+}
