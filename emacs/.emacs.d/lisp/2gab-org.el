@@ -10,17 +10,18 @@
 
 ;;; Code:
 
-(defvar 2gab-org-roam-directory "~/org/roam/")
+;; Notes live in ~/org/knowledge (git-tracked); the db stays in ~/org/roam/
+;; so the sqlite file itself is never inside a git-tracked directory.
+(defvar 2gab-org-roam-directory "~/org/knowledge/")
+(defvar 2gab-org-roam-db-directory "~/org/roam/")
 
-(unless (file-exists-p 2gab-org-roam-directory)
-  (make-directory 2gab-org-roam-directory t))
+(unless (file-exists-p 2gab-org-roam-db-directory)
+  (make-directory 2gab-org-roam-db-directory t))
 
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename 2gab-org-roam-directory))
-  ;; keep the sqlite db next to the notes, not inside the (git-tracked)
-  ;; ~/.emacs.d
-  (org-roam-db-location (expand-file-name "org-roam.db" 2gab-org-roam-directory))
+  (org-roam-db-location (expand-file-name "org-roam.db" 2gab-org-roam-db-directory))
   :bind (("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
