@@ -230,8 +230,11 @@ client.urgent           #3D3454 #C4405A #D9CBBB #C4405A   #C4405A
 client.placeholder      #0F0C11 #0F0C11 #D9CBBB #0F0C11   #0F0C11
 client.background       #D9CBBB
 
-# Display setup
-exec --no-startup-id xrandr --output HDMI-2 --auto --right-of eDP-1
+# Display setup — layout is managed by autorandr (profiles: tv-acima, sozinho)
+exec --no-startup-id autorandr --change
+# NVIDIA's proprietary driver doesn't emit DRM hotplug events, so udev can't
+# auto-trigger autorandr on plug/unplug — use this to re-apply after (re)connecting the TV
+bindsym $mod+Shift+t exec --no-startup-id autorandr --change
 
 # Lock screen
 bindsym $mod+ctrl+l exec --no-startup-id i3lock --color=0F0C11
