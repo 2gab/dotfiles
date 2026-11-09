@@ -17,7 +17,7 @@ if ! command -v git >/dev/null 2>&1; then
   if command -v pacman >/dev/null 2>&1; then
     sudo pacman -S --noconfirm git
   elif command -v apt-get >/dev/null 2>&1; then
-    sudo apt-get install -y git
+    sudo apt-get update -qq && sudo apt-get install -y git
   elif command -v dnf >/dev/null 2>&1; then
     sudo dnf install -y git
   else

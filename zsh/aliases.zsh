@@ -16,12 +16,20 @@ alias gd="git diff"
 alias gco="git checkout"
 alias gb="git branch"
 
-# Arch Linux
-alias update="sudo pacman -Syu"
-alias install="sudo pacman -S"
-alias remove="sudo pacman -Rns"
-alias search="pacman -Ss"
-alias clean="sudo pacman -Rns \$(pacman -Qtdq)"
+# Package manager
+if (( $+commands[pacman] )); then
+  alias update="sudo pacman -Syu"
+  alias install="sudo pacman -S"
+  alias remove="sudo pacman -Rns"
+  alias search="pacman -Ss"
+  alias clean="sudo pacman -Rns \$(pacman -Qtdq)"
+elif (( $+commands[apt-get] )); then
+  alias update="sudo apt update && sudo apt upgrade"
+  alias install="sudo apt install"
+  alias remove="sudo apt purge --autoremove"
+  alias search="apt search"
+  alias clean="sudo apt autoremove --purge"
+fi
 
 # Utilities
 alias reload="source ~/.zshrc"

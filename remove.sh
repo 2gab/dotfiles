@@ -59,7 +59,7 @@ section "Removendo symlinks (stow -D)"
 
 cd "$DOTFILES"
 
-for pkg in zsh p10k git config assets emacs; do
+for pkg in zsh p10k git config assets emacs tmux; do
   if [ -d "$DOTFILES/$pkg" ]; then
     if stow -t "$HOME" -D "$pkg" >> "$LOG" 2>&1; then
       log "Unstowed: $pkg"

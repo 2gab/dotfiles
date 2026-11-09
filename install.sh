@@ -49,10 +49,12 @@ pkg_install() {
 get_packages() {
   case "$DISTRO" in
     arch)
-      echo "zsh stow kitty i3-wm i3status picom feh neovim emacs poppler-glib pandoc-cli ttf-jetbrains-mono-nerd eza bat ripgrep fd tmux docker docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-applet dmenu"
+      echo "zsh stow kitty i3-wm i3status picom feh neovim emacs poppler-glib pandoc-cli ttf-jetbrains-mono-nerd eza bat ripgrep fd tmux docker docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-applet dmenu direnv autorandr"
       ;;
     debian)
-      echo "zsh stow kitty i3 i3status picom feh neovim emacs libpoppler-glib-dev libpoppler-private-dev pandoc fonts-jetbrains-mono eza bat ripgrep fd-find tmux docker.io docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-gnome suckless-tools"
+      # A Nerd Font não tem pacote no Debian — ver install_nerd_font.
+      # cmake..libvterm-dev: vterm; autoconf..zlib1g-dev: epdfinfo do pdf-tools.
+      echo "zsh stow kitty i3 i3status picom feh neovim emacs libpoppler-glib-dev libpoppler-private-dev pandoc eza bat ripgrep fd-find tmux docker.io docker-compose dex xdotool maim xclip xss-lock i3lock network-manager-gnome suckless-tools direnv autorandr pulseaudio-utils psmisc xz-utils build-essential cmake libtool-bin libvterm-dev autoconf automake pkg-config libpng-dev zlib1g-dev"
       ;;
   esac
 }
@@ -67,6 +69,7 @@ section(){ echo -e "\n${BOLD}${CYAN}── $1 ──${RESET}" | tee -a "$LOG"; }
 
 # ─── Init ─────────────────────────────────────────────────────────────────────
 echo "Bootstrap started at $(date)" > "$LOG"
+FAILED=0
 
 echo -e "${BOLD}${CYAN}"
 echo "┌────────────────────────────────┐"
@@ -79,14 +82,49 @@ echo ""
 # ─── Dependencies ─────────────────────────────────────────────────────────────
 section "Dependencies"
 
-for cmd in git stow curl zsh; do
-  if command -v "$cmd" >/dev/null 2>&1; then
-    log "$cmd"
-  else
-    err "Missing: $cmd — install it first and re-run"
-    exit 1
+require_cmds() {
+  local cmd
+  for cmd in "$@"; do
+    if command -v "$cmd" >/dev/null 2>&1; then
+      log "$cmd"
+    else
+      err "Missing: $cmd — install it first and re-run"
+      exit 1
+    fi
+  done
+}
+
+# Debian instala o binário com outro nome (fdfind, batcat)
+link_debian_bin() {
+  local real="$1" name="$2"
+  if command -v "$real" >/dev/null 2>&1 && ! command -v "$name" >/dev/null 2>&1; then
+    sudo ln -sf "$(command -v "$real")" "/usr/local/bin/$name"
+    log "Symlink $name → $real criado"
   fi
-done
+}
+
+install_nerd_font() {
+  local dir="$HOME/.local/share/fonts/JetBrainsMonoNerd" tmp
+  if fc-list 2>/dev/null | grep -q "JetBrainsMono Nerd Font"; then
+    log "JetBrainsMono Nerd Font já presente"
+    return
+  fi
+  info "Instalando JetBrainsMono Nerd Font..."
+  tmp="$(mktemp -d)"
+  if curl -fsSL -o "$tmp/font.tar.xz" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz \
+    && mkdir -p "$dir" \
+    && tar xJf "$tmp/font.tar.xz" -C "$dir"; then
+    fc-cache -f "$dir" >> "$LOG" 2>&1 || true
+    log "JetBrainsMono Nerd Font instalada"
+  else
+    err "Falha ao instalar a Nerd Font"
+    FAILED=1
+  fi
+  rm -rf "$tmp"
+}
+
+# stow e zsh vêm da lista de pacotes e são checados depois dela
+require_cmds git curl
 
 # ─── Packages ─────────────────────────────────────────────────────────────────
 section "System packages"
@@ -95,23 +133,38 @@ if [ "$DISTRO" = "unknown" ]; then
   warn "Distro não reconhecida — pulando instalação de pacotes"
 else
   if [ "$DISTRO" = "debian" ]; then
-    sudo apt-get update -qq >> "$LOG" 2>&1
+    sudo apt-get update -qq >> "$LOG" 2>&1 || warn "apt-get update falhou (veja $LOG)"
   fi
   read -ra PACKAGES <<< "$(get_packages)"
-  pkg_install "${PACKAGES[@]}" >> "$LOG" 2>&1 || warn "Alguns pacotes falharam (veja $LOG)"
-  log "Pacotes instalados"
+  if pkg_install "${PACKAGES[@]}" >> "$LOG" 2>&1; then
+    log "Pacotes instalados"
+  else
+    err "Falha ao instalar pacotes (veja $LOG)"
+    FAILED=1
+  fi
 
-  # fd no Debian instala como fdfind — cria symlink se necessário
-  if [ "$DISTRO" = "debian" ] && command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
-    sudo ln -sf "$(which fdfind)" /usr/local/bin/fd
-    log "Symlink fd → fdfind criado"
+  if [ "$DISTRO" = "debian" ]; then
+    link_debian_bin fdfind fd
+    link_debian_bin batcat bat
+    install_nerd_font
+  fi
+
+  # Docker sem sudo (vale após sair e entrar na sessão)
+  if getent group docker >/dev/null && ! id -nG "$USER" | grep -qw docker; then
+    sudo usermod -aG docker "$USER"
+    log "$USER adicionado ao grupo docker"
   fi
 fi
 
+require_cmds stow zsh
+
 # nvm não é pacote — instala via curl em qualquer distro
-if [ ! -d "$HOME/.nvm" ]; then
+# NVM_DIR explícito: com XDG_CONFIG_HOME definido (ex.: XFCE) o instalador usaria
+# ~/.config/nvm, mas o exports.zsh carrega de ~/.nvm
+if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
   info "Instalando nvm..."
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh | bash >> "$LOG" 2>&1
+  mkdir -p "$HOME/.nvm"
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh | NVM_DIR="$HOME/.nvm" bash >> "$LOG" 2>&1
   log "nvm instalado"
 else
   log "nvm já presente"
@@ -179,13 +232,29 @@ _backup_if_exists() {
   fi
 }
 
+# Move para o lado os arquivos reais que o pacote vai substituir. Não usar
+# stow --adopt: ele sobrescreve o arquivo do repositório com o que está no $HOME
+# (o instalador do Oh My Zsh cria um ~/.zshrc, que tomaria o lugar do nosso).
+_backup_conflicts() {
+  local pkg="$1" rel ignore="$DOTFILES/$1/.stow-local-ignore"
+  while IFS= read -r -d '' rel; do
+    rel="${rel#./}"
+    [ "$rel" = ".stow-local-ignore" ] && continue
+    if [ -f "$ignore" ] && printf '%s\n' "$rel" | grep -qEf "$ignore"; then
+      continue
+    fi
+    _backup_if_exists "$HOME/$rel"
+  done < <(cd "$DOTFILES/$pkg" && find . \( -type f -o -type l \) -print0)
+}
+
 for pkg in zsh p10k git config assets emacs tmux; do
   if [ -d "$DOTFILES/$pkg" ]; then
+    stow -n -t "$HOME" -R "$pkg" >> "$LOG" 2>&1 || _backup_conflicts "$pkg"
     if stow -t "$HOME" -R "$pkg" >> "$LOG" 2>&1; then
       log "Stowed: $pkg"
     else
-      warn "Conflict stowing $pkg — trying with --adopt..."
-      stow -t "$HOME" --adopt -R "$pkg" >> "$LOG" 2>&1 && log "Stowed (adopted): $pkg" || err "Failed to stow: $pkg"
+      err "Failed to stow: $pkg (veja $LOG)"
+      FAILED=1
     fi
   else
     warn "Skipped: $pkg (directory not found)"
@@ -198,20 +267,22 @@ section "Git identity"
 if [ ! -f "$HOME/.gitconfig.local" ]; then
   info "No ~/.gitconfig.local found — setting up git identity..."
   echo ""
-  printf "  Name  [Gabriel Henrique da Silva]: "
+  # Sem valores padrão: este repositório é público
+  printf "  Name: "
   read -r git_name
-  git_name="${git_name:-Gabriel Henrique da Silva}"
-
-  printf "  Email [info.2gabrielhdasilva@gmail.com.br]: "
+  printf "  Email (privado: ID+usuario@users.noreply.github.com): "
   read -r git_email
-  git_email="${git_email:-2gabrielhdasilva@gmail.com.br}"
 
-  cat > "$HOME/.gitconfig.local" <<EOF
+  if [ -n "$git_name" ] && [ -n "$git_email" ]; then
+    cat > "$HOME/.gitconfig.local" <<EOF
 [user]
 	name = $git_name
 	email = $git_email
 EOF
-  log "Created ~/.gitconfig.local"
+    log "Created ~/.gitconfig.local"
+  else
+    warn "Nome ou email vazio — ~/.gitconfig.local não foi criado"
+  fi
 else
   log "~/.gitconfig.local already exists"
 fi
@@ -220,15 +291,27 @@ fi
 section "Default shell"
 
 ZSH_PATH="$(command -v zsh)"
-if [ "$SHELL" != "$ZSH_PATH" ]; then
+# $SHELL só muda após novo login; o valor real está no passwd
+if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$ZSH_PATH" ]; then
   info "Setting zsh as default shell..."
-  chsh -s "$ZSH_PATH" >> "$LOG" 2>&1
-  log "Default shell → zsh"
+  # Sem redirecionar: o chsh pede a senha no terminal
+  if chsh -s "$ZSH_PATH"; then
+    log "Default shell → zsh"
+  else
+    err "chsh falhou — rode: chsh -s $ZSH_PATH"
+    FAILED=1
+  fi
 else
   log "zsh is already the default shell"
 fi
 
 # ─── Done ─────────────────────────────────────────────────────────────────────
+if [ "$FAILED" -ne 0 ]; then
+  echo ""
+  err "Setup incompleto — veja os erros acima e $LOG"
+  exit 1
+fi
+
 echo ""
 echo -e "${BOLD}${GREEN}"
 echo "┌────────────────────────────────┐"

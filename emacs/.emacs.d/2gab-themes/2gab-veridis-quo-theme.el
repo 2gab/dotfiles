@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2022-2026  Free Software Foundation, Inc.
 
-;; Author: 2gab <2gabrielhdasilva@gmail.com>
-;; Maintainer: 2gab <2gabrielhdasilva@gmail.com>
+;; Author: 2gab
+;; Maintainer: 2gab
 ;; URL: https://github.com/2gab/2gab-themes
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "28.1"))
